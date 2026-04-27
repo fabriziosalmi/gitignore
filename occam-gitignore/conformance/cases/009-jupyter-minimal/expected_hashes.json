@@ -1,0 +1,11 @@
+{
+  "content_hash": "sha256:0a0c2f7d6e4345c176018c8bd06d4ebcb63ba0b25933f2bfaf0758922f547127",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "jupyter"
+  ],
+  "provenance_hash": "sha256:f5b52d741566a04e0d36179b43ae63a84bccbbda90f14997246df3d5ea4c574d",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

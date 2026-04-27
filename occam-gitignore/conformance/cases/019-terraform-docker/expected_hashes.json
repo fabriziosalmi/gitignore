@@ -1,0 +1,12 @@
+{
+  "content_hash": "sha256:12f72cf75febe498a7b199f8d4db9885f47aaf1591095cffd08dffce5fb062cf",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "docker",
+    "terraform"
+  ],
+  "provenance_hash": "sha256:9af9ea2c48f375b3c127d00901d25b45f32e94e084917b932aa12f4934ac6cb3",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

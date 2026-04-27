@@ -1,0 +1,5 @@
+[
+  "src/main.py",
+  "tests/test_a.py",
+  "pyproject.toml"
+]

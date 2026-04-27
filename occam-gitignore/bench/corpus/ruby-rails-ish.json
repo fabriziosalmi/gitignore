@@ -1,0 +1,16 @@
+{
+  "name": "ruby-rails-ish",
+  "tree": ["Gemfile", "Rakefile", "app/models/user.rb", "spec/user_spec.rb"],
+  "expected": [
+    "*.gem",
+    ".bundle/",
+    "tmp/",
+    "log/*.log",
+    "vendor/bundle/",
+    "coverage/",
+    ".DS_Store",
+    ".idea/",
+    ".vscode/",
+    "Thumbs.db"
+  ]
+}

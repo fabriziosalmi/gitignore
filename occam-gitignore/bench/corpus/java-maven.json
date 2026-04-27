@@ -1,0 +1,16 @@
+{
+  "name": "java-maven",
+  "tree": ["pom.xml", "src/main/java/App.java", "src/test/java/AppTest.java"],
+  "expected": [
+    "target/",
+    "*.class",
+    "*.jar",
+    ".gradle/",
+    "build/",
+    "*.iml",
+    ".DS_Store",
+    ".idea/",
+    ".vscode/",
+    "Thumbs.db"
+  ]
+}

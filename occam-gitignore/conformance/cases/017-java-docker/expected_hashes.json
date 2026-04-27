@@ -1,0 +1,12 @@
+{
+  "content_hash": "sha256:a3b1e0fec0beaf3e3108f6d36b68e37abcbf791780ae4c99c8bbb78ed5f33302",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "docker",
+    "java"
+  ],
+  "provenance_hash": "sha256:b19cdbd2dcbb6959cb598dab9ce3c00cafeaebb55acd3a762d44a2de1ae4894d",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

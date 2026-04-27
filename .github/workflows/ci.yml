@@ -1,0 +1,100 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: lint + types + tests + bench (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.10.x"
+
+      - name: Set up Python
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Sync workspace
+        run: uv sync --frozen
+        working-directory: occam-gitignore
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+        working-directory: occam-gitignore
+
+      - name: Type check (mypy --strict)
+        run: uv run mypy .
+        working-directory: occam-gitignore
+
+      - name: Tests + coverage gate
+        run: uv run pytest -q --cov --cov-report=term-missing --cov-fail-under=85
+        working-directory: occam-gitignore
+
+      - name: Conformance suite
+        run: uv run python conformance/run_conformance.py
+        working-directory: occam-gitignore
+
+      - name: Benchmark gates
+        run: |
+          uv run occam-gitignore-bench run bench/corpus \
+            --templates data/templates \
+            --rules-table data/rules_table.json \
+            --repeats 5 \
+            --min-recall 0.85 \
+            --max-p99-ms 5.0
+        working-directory: occam-gitignore
+
+      - name: Performance budget (synthetic 1000 trees × 200 paths)
+        if: matrix.python-version == '3.12'
+        run: |
+          uv run occam-gitignore-bench perf \
+            --templates data/templates \
+            --rules-table data/rules_table.json \
+            --n-trees 1000 \
+            --paths-per-tree 200
+        working-directory: occam-gitignore
+
+  sbom:
+    name: SBOM (SPDX, on push to main)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Generate SPDX SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: occam-gitignore
+          format: spdx-json
+          artifact-name: sbom-workspace.spdx.json
+          output-file: sbom-workspace.spdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom-workspace.spdx.json
+          retention-days: 30

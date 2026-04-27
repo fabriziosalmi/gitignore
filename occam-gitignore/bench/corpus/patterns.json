@@ -1,0 +1,31 @@
+{
+  "name": "patterns",
+  "tree": [
+    "json2apache.py",
+    "json2haproxy.py",
+    "json2nginx.py",
+    "owasp_rules.json",
+    "requirements.txt",
+    "tests/test_x.py"
+  ],
+  "expected": [
+    "__pycache__/",
+    "*.py[cod]",
+    "*.so",
+    "build/",
+    "dist/",
+    "*.egg-info/",
+    ".coverage",
+    "coverage.xml",
+    "htmlcov/",
+    ".pytest_cache/",
+    ".tox/",
+    ".venv/",
+    "venv/",
+    ".env",
+    ".DS_Store",
+    ".idea/",
+    ".vscode/",
+    "Thumbs.db"
+  ]
+}

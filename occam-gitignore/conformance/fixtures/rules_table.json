@@ -1,0 +1,29 @@
+{
+  "rules": [
+    {
+      "features": [
+        "node"
+      ],
+      "patterns": [
+        "*.tmp",
+        ".DS_Store",
+        ".idea/",
+        ".vscode/",
+        "Thumbs.db"
+      ]
+    },
+    {
+      "features": [
+        "python"
+      ],
+      "patterns": [
+        ".DS_Store",
+        ".env",
+        ".idea/",
+        ".vscode/",
+        "Thumbs.db"
+      ]
+    }
+  ],
+  "version": "sha256:72fd0c323cc1"
+}

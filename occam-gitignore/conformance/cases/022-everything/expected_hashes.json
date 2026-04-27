@@ -1,0 +1,21 @@
+{
+  "content_hash": "sha256:8ff7822b0ebf9466ef100dbd6e8fbe06200da7d7d8eb86f30713904b79b1c96f",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "csharp",
+    "docker",
+    "go",
+    "java",
+    "jupyter",
+    "node",
+    "python",
+    "ruby",
+    "rust",
+    "swift",
+    "terraform"
+  ],
+  "provenance_hash": "sha256:67faa946fd90d948db78762123e18251f580fbe064185fbc79c0c88f5a0cf9a1",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

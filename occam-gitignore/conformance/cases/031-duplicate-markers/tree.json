@@ -1,0 +1,5 @@
+[
+  "pyproject.toml",
+  "subpkg/pyproject.toml",
+  "vendor/pyproject.toml"
+]

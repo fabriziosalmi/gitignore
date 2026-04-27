@@ -1,0 +1,8 @@
+{
+  "extras": [
+    ".vercel/",
+    ".turbo/"
+  ],
+  "include_comments": true,
+  "include_provenance": false
+}

@@ -1,0 +1,12 @@
+{
+  "content_hash": "sha256:4fd3d2c3bb8f8f28e53854daca792fcb8459b9dbe2f9849bf45bbfa1ec106479",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "docker",
+    "python"
+  ],
+  "provenance_hash": "sha256:26ba18a08fa7dfae8271d9baa64b846da286cdc58c3187bd2fd0cb88a1e4bc20",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

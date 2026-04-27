@@ -1,0 +1,11 @@
+{
+  "content_hash": "sha256:0d408401bc597545f91ae021afa30fce7fc8a36c35fc67f2254d91a5bbbeea6a",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "node"
+  ],
+  "provenance_hash": "sha256:9d253307ed9fe5a16f7c99a895eaea1a31841ba18b9b923c19dc844fd751d180",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

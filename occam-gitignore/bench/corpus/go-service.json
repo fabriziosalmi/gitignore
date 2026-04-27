@@ -1,0 +1,15 @@
+{
+  "name": "go-service",
+  "tree": ["go.mod", "go.sum", "main.go", "internal/handler/handler.go"],
+  "expected": [
+    "*.exe",
+    "*.so",
+    "*.dylib",
+    "*.test",
+    "vendor/",
+    ".DS_Store",
+    ".idea/",
+    ".vscode/",
+    "Thumbs.db"
+  ]
+}

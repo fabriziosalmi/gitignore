@@ -1,0 +1,13 @@
+{
+  "name": "rust-cli",
+  "tree": ["Cargo.toml", "src/main.rs", "src/lib.rs"],
+  "expected": [
+    "target/",
+    "**/*.rs.bk",
+    "Cargo.lock",
+    ".DS_Store",
+    ".idea/",
+    ".vscode/",
+    "Thumbs.db"
+  ]
+}

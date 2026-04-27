@@ -1,0 +1,152 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write       # create GitHub Release
+  id-token: write       # OIDC for sigstore / SLSA attestations
+  attestations: write   # publish build provenance
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build wheels + sdist (all 6 packages)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      digests: ${{ steps.hash.outputs.digests }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.10.x"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Sync workspace (frozen)
+        run: uv sync --frozen
+        working-directory: occam-gitignore
+
+      - name: Build all packages
+        # Hatch-built wheels + sdists for every workspace member.
+        run: |
+          mkdir -p dist
+          for pkg in packages/*/; do
+            uv build --package "$(basename "$pkg")" --out-dir "$GITHUB_WORKSPACE/dist"
+          done
+        working-directory: occam-gitignore
+
+      - name: Compute artifact digests (for SLSA subject)
+        id: hash
+        run: |
+          cd dist
+          digests=$(sha256sum * | base64 -w0)
+          echo "digests=$digests" >> "$GITHUB_OUTPUT"
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  sbom:
+    name: SBOM (SPDX, syft)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Generate SPDX SBOM (workspace)
+        uses: anchore/sbom-action@v0
+        with:
+          path: occam-gitignore
+          format: spdx-json
+          artifact-name: sbom-workspace.spdx.json
+          output-file: sbom-workspace.spdx.json
+
+      - name: Generate SPDX SBOM (dist artifacts)
+        uses: anchore/sbom-action@v0
+        with:
+          path: dist
+          format: spdx-json
+          artifact-name: sbom-dist.spdx.json
+          output-file: sbom-dist.spdx.json
+
+      - name: Upload SBOMs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: |
+            sbom-workspace.spdx.json
+            sbom-dist.spdx.json
+
+  attest:
+    name: SLSA build provenance
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      id-token: write
+      attestations: write
+      contents: read
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Attest build provenance for every artifact
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: "dist/*"
+
+  release:
+    name: Publish GitHub Release
+    needs: [build, sbom, attest]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: sbom
+          path: sbom
+      - name: Create release with artifacts + SBOM
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*
+            sbom/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

@@ -1,0 +1,11 @@
+{
+  "content_hash": "sha256:684354ce4b6968321e4f5762b1d0aa68ca7260e7dbaa6a7b404aaa6ab2a6734b",
+  "core_version": "0.0.1",
+  "features": [
+    "common",
+    "java"
+  ],
+  "provenance_hash": "sha256:6a6217be9f99d9d851c91cfd9c59246aabfa41fc878dd746f43cd1bafb2fa0f0",
+  "rules_table_version": "sha256:72fd0c323cc1",
+  "templates_version": "sha256:2b4ad54ce9b4"
+}

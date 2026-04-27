@@ -1,0 +1,19 @@
+[run]
+branch = false
+source =
+    occam_gitignore_core
+    occam_gitignore_cli
+    occam_gitignore_api
+    occam_gitignore_mcp
+    occam_gitignore_bench
+    occam_gitignore_training
+omit =
+    */__main__.py
+    */tests/*
+
+[report]
+exclude_also =
+    if TYPE_CHECKING:
+    raise NotImplementedError
+    \.\.\.
+show_missing = true

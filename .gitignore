@@ -1,0 +1,11 @@
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+all_public_repos.txt
+history_repo_with_gitignore.txt
+history_repo_without_gitignore.txt
+repo_with_gitignore.txt
+repo_without_gitignore.txt
+
+REPORT_GITIGNORE_OPTIMIZATION.md

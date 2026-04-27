@@ -1,0 +1,19 @@
+[project]
+name = "occam-gitignore-bench"
+version = "0.0.1"
+description = "Reproducible benchmarks for occam-gitignore."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "occam-gitignore-core",
+]
+
+[project.scripts]
+occam-gitignore-bench = "occam_gitignore_bench.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/occam_gitignore_bench"]

@@ -1,0 +1,8 @@
+{
+  "extras": [
+    ".env.local",
+    "secrets/"
+  ],
+  "include_comments": true,
+  "include_provenance": false
+}

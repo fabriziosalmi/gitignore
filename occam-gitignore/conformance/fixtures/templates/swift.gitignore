@@ -1,0 +1,13 @@
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+*.xcodeproj/
+xcuserdata/
+DerivedData/
+.idea/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Pods/

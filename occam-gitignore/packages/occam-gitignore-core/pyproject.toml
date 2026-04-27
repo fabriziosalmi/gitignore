@@ -1,0 +1,14 @@
+[project]
+name = "occam-gitignore-core"
+version = "0.0.1"
+description = "Pure, deterministic core for occam-gitignore."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/occam_gitignore_core"]

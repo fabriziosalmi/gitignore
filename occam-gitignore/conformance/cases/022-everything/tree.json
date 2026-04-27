@@ -1,0 +1,13 @@
+[
+  "pyproject.toml",
+  "package.json",
+  "go.mod",
+  "Cargo.toml",
+  "Dockerfile",
+  "main.tf",
+  "notebook.ipynb",
+  "pom.xml",
+  "Gemfile",
+  "App.csproj",
+  "Package.swift"
+]

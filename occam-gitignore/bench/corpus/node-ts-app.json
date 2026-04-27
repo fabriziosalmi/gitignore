@@ -1,0 +1,17 @@
+{
+  "name": "node-ts-app",
+  "tree": ["package.json", "tsconfig.json", "src/index.ts", "tests/index.test.ts"],
+  "expected": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    "*.tsbuildinfo",
+    ".eslintcache",
+    "npm-debug.log*",
+    ".npm/",
+    ".DS_Store",
+    ".idea/",
+    ".vscode/",
+    "Thumbs.db"
+  ]
+}
