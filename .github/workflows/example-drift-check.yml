@@ -1,0 +1,21 @@
+name: gitignore drift check (example)
+
+# This is a *demo* of the composite action. It is not wired to PRs/pushes
+# because the repo's own .gitignore intentionally has hand-curated content.
+# Trigger manually from the Actions tab to see the action in action.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-gitignore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: occam-gitignore drift check
+        uses: ./
+        with:
+          path: '.'
+          mode: 'check'

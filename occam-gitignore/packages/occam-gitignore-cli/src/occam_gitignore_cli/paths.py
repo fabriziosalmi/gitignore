@@ -14,8 +14,9 @@ def data_root() -> Path:
     """Locate the data directory.
 
     Resolution order:
-      1. `OCCAM_GITIGNORE_DATA_DIR` environment variable.
-      2. `<repo-root>/data` walking up from this file (monorepo layout).
+      1. ``OCCAM_GITIGNORE_DATA_DIR`` environment variable.
+      2. Data shipped inside the wheel (``occam_gitignore_cli/_data``).
+      3. Monorepo layout: walk up looking for ``<repo>/data/rules_table.json``.
     """
     env = os.environ.get(_ENV_DATA_DIR)
     if env:
@@ -23,6 +24,11 @@ def data_root() -> Path:
         if not path.is_dir():
             raise FileNotFoundError(f"{_ENV_DATA_DIR}={env} is not a directory")
         return path
+
+    bundled = Path(__file__).resolve().parent / "_data"
+    if (bundled / "rules_table.json").is_file():
+        return bundled
+
     here = Path(__file__).resolve()
     for parent in here.parents:
         candidate = parent / "data"

@@ -1,6 +1,6 @@
 {
-  "content_hash": "sha256:8ff7822b0ebf9466ef100dbd6e8fbe06200da7d7d8eb86f30713904b79b1c96f",
-  "core_version": "0.0.1",
+  "content_hash": "sha256:26dad1682ac202298c0f538cce41295e07bcfcfb97a7bedd4362bd0aed519f01",
+  "core_version": "0.1.2",
   "features": [
     "common",
     "csharp",
@@ -15,7 +15,7 @@
     "swift",
     "terraform"
   ],
-  "provenance_hash": "sha256:67faa946fd90d948db78762123e18251f580fbe064185fbc79c0c88f5a0cf9a1",
+  "provenance_hash": "sha256:3a5a10827fc98edd07bbf98cd732731738e97c588e1605fbda5070f50f15af33",
   "rules_table_version": "sha256:72fd0c323cc1",
   "templates_version": "sha256:2b4ad54ce9b4"
 }

@@ -1,12 +1,12 @@
 {
-  "content_hash": "sha256:4fd3d2c3bb8f8f28e53854daca792fcb8459b9dbe2f9849bf45bbfa1ec106479",
-  "core_version": "0.0.1",
+  "content_hash": "sha256:5e21738c00254f6a7b1bdeaf0abe5d0152d4ed870c102646c55997822dce900a",
+  "core_version": "0.1.2",
   "features": [
     "common",
     "docker",
     "python"
   ],
-  "provenance_hash": "sha256:26ba18a08fa7dfae8271d9baa64b846da286cdc58c3187bd2fd0cb88a1e4bc20",
+  "provenance_hash": "sha256:4fd64d8fc4973718217386e8525fcc1c636ead361137d94c486b27a528cff634",
   "rules_table_version": "sha256:72fd0c323cc1",
   "templates_version": "sha256:2b4ad54ce9b4"
 }

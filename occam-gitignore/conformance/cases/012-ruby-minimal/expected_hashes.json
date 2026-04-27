@@ -1,11 +1,11 @@
 {
-  "content_hash": "sha256:22853c298cd511c4115123a7eeff932ddc9c8e48613c19a8a827ba451d9feea8",
-  "core_version": "0.0.1",
+  "content_hash": "sha256:e717b1bce3cd882d5adf2e4b6d3b81f14ba91703d4119ca906a1a5f4dfd21ae0",
+  "core_version": "0.1.2",
   "features": [
     "common",
     "ruby"
   ],
-  "provenance_hash": "sha256:8440e6e50872055b140060e38a97bc79a9d72dde18988e556228738545cb7543",
+  "provenance_hash": "sha256:d526375c1cfa4daf0b80ce5f1a11f40c2bd1ffc314d3b8bf5d9f34e0e788b2e0",
   "rules_table_version": "sha256:72fd0c323cc1",
   "templates_version": "sha256:2b4ad54ce9b4"
 }

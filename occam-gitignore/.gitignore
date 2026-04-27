@@ -13,3 +13,7 @@ dist/
 build/
 *.egg-info/
 .DS_Store
+
+# Hatch build hook artifact (data/ gets copied here at build time).
+packages/occam-gitignore-cli/src/occam_gitignore_cli/_data/
+

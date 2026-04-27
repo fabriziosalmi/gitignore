@@ -1,0 +1,96 @@
+name: 'occam-gitignore'
+description: 'Deterministic .gitignore generation, drift checking, and auto-fix.'
+author: 'Fabrizio Salmi'
+branding:
+  icon: 'shield'
+  color: 'gray-dark'
+
+inputs:
+  path:
+    description: 'Repository path to scan (default: workspace root).'
+    required: false
+    default: '.'
+  mode:
+    description: 'Operation mode: "check" fails on drift; "fix" rewrites .gitignore in place.'
+    required: false
+    default: 'check'
+  python-version:
+    description: 'Python version used to install the CLI.'
+    required: false
+    default: '3.12'
+  version:
+    description: 'PEP 440 specifier for the occam-gitignore package (e.g. ">=0.1.2,<0.2").'
+    required: false
+    default: '>=0.1.2,<0.2'
+
+outputs:
+  drift:
+    description: '"true" if the existing .gitignore differs from the deterministic output, "false" otherwise.'
+    value: ${{ steps.check.outputs.drift }}
+  output-hash:
+    description: 'sha256:<digest> of the deterministic .gitignore content.'
+    value: ${{ steps.check.outputs.output-hash }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install occam-gitignore
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install "occam-gitignore${{ inputs.version }}"
+
+    - name: Check / fix .gitignore
+      id: check
+      shell: bash
+      env:
+        OCCAM_PATH: ${{ inputs.path }}
+        OCCAM_MODE: ${{ inputs.mode }}
+      run: |
+        set -euo pipefail
+        target_dir="${OCCAM_PATH}"
+        gi="${target_dir%/}/.gitignore"
+        tmp="$(mktemp)"
+        occam-gitignore generate "${target_dir}" > "${tmp}"
+
+        # Compute output hash (matches the comment header digest).
+        digest="sha256:$(sha256sum "${tmp}" | awk '{print $1}')"
+        echo "output-hash=${digest}" >> "${GITHUB_OUTPUT}"
+
+        if [[ -f "${gi}" ]] && diff -q "${gi}" "${tmp}" >/dev/null 2>&1; then
+          echo "drift=false" >> "${GITHUB_OUTPUT}"
+          echo "::notice title=occam-gitignore::no drift detected (${digest})"
+          rm -f "${tmp}"
+          exit 0
+        fi
+
+        echo "drift=true" >> "${GITHUB_OUTPUT}"
+
+        case "${OCCAM_MODE}" in
+          check)
+            echo "::error title=occam-gitignore::drift detected in ${gi}"
+            if [[ -f "${gi}" ]]; then
+              echo "----- diff (current → deterministic) -----"
+              diff -u "${gi}" "${tmp}" || true
+            else
+              echo "----- proposed .gitignore -----"
+              cat "${tmp}"
+            fi
+            rm -f "${tmp}"
+            exit 1
+            ;;
+          fix)
+            mv "${tmp}" "${gi}"
+            echo "::notice title=occam-gitignore::wrote ${gi} (${digest})"
+            ;;
+          *)
+            echo "::error title=occam-gitignore::unknown mode '${OCCAM_MODE}' (expected: check|fix)"
+            rm -f "${tmp}"
+            exit 2
+            ;;
+        esac
