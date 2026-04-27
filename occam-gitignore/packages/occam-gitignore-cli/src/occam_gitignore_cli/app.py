@@ -19,7 +19,7 @@ from occam_gitignore_core import (
     generate,
 )
 
-from .paths import rules_table_path, templates_root
+from .paths import data_root, rules_table_path, templates_root
 from .scanner import scan_tree
 
 app = typer.Typer(
@@ -139,7 +139,11 @@ def serve_api(host: str = "127.0.0.1", port: int = 8080) -> None:
     except ImportError as exc:
         typer.echo(f"occam-gitignore-api not installed: {exc}", err=True)
         raise typer.Exit(2) from exc
-    raise typer.Exit(api_main(["--host", host, "--port", str(port)]))
+    raise typer.Exit(
+        api_main(
+            ["--host", host, "--port", str(port), "--data-dir", str(data_root())],
+        ),
+    )
 
 
 @serve_app.command("mcp")
@@ -155,7 +159,14 @@ def serve_mcp(
         typer.echo(f"occam-gitignore-mcp not installed: {exc}", err=True)
         raise typer.Exit(2) from exc
     raise typer.Exit(
-        mcp_main(["--transport", transport, "--host", host, "--port", str(port)]),
+        mcp_main(
+            [
+                "--transport", transport,
+                "--host", host,
+                "--port", str(port),
+                "--data-dir", str(data_root()),
+            ],
+        ),
     )
 
 
